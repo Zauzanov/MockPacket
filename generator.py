@@ -1,6 +1,5 @@
 import requests
 from scapy.all import Ether, IP, TCP, Raw, wrpcap
-import os
 
 # URLs for test images:
 image_urls = {
