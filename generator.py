@@ -18,21 +18,24 @@ def create_pcap():
     print("Downloading images and building packets...")
     
     for i, (filename, url) in enumerate(image_urls.items()):                                                        # Loops over the dict entries.
+        # Preventing one failed download from killing the script
         try:
             # Download image data
-            img_data = requests.get(url).content
+            img_data = requests.get(url).content                                                                    # Raw response bodt as bytes for images. 
             
             # Construct a fake HTTP Response header
             http_header = (
                 f"HTTP/1.1 200 OK\r\n"
                 f"Content-Type: image/jpeg\r\n"
-                f"Content-Length: {len(img_data)}\r\n"
-                f"Connection: close\r\n\r\n"
-            ).encode()
+                f"Content-Length: {len(img_data)}\r\n"                                                              # Length in bytes of the body. 
+                f"Connection: close\r\n\r\n"                                                                        # The end of headers. 
+            ).encode()                                                                                              # Converts the header string into bytes.
             
-            payload = http_header + img_data
+            # Contatenates header and body into one payload
+            payload = http_header + img_data 
             
-            # Wrap in Ethernet/IP/TCP layers.
+
+            # Build a fake packet, wrapping in Ethernet/IP/TCP layers.
             # Each image gets a unique port to simulate different requests:
             pkt = (Ether() / 
                    IP(src=src_ip, dst=dst_ip) / 
