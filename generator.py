@@ -1,4 +1,4 @@
-import requests
+import requests                                                                                                     # Allows to call requests to fetsh URLs.
 from scapy.all import Ether, IP, TCP, Raw, wrpcap
 
 # URLs for test images:
@@ -11,13 +11,13 @@ image_urls = {
 }
 
 def create_pcap():
-    packets = []
-    src_ip = "192.168.1.10"
-    dst_ip = "10.0.0.5"
+    packets = []                                                                                                    # An empty list for Scapy packet objects.
+    src_ip = "192.168.1.10"                                                                                         # I am simulating traffic.
+    dst_ip = "10.0.0.5"                                                                                             # Private addresses; They are not publicly routable from the global internet.
     
     print("Downloading images and building packets...")
     
-    for i, (filename, url) in enumerate(image_urls.items()):
+    for i, (filename, url) in enumerate(image_urls.items()):                                                        # Loops over the dict entries.
         try:
             # Download image data
             img_data = requests.get(url).content
