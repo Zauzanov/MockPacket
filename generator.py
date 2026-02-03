@@ -47,7 +47,7 @@ def create_pcap():
 
     # Write all packets to a .pcap file
     wrpcap("test_images.pcap", packets)
-    print("\nSuccess! Generated 'test_images.pcap' with 5 images.")
+    print(f"\nSuccess! Generated 'test_images.pcap' {len(packets)} images.")
 
 if __name__ == "__main__":
     create_pcap()
