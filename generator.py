@@ -39,12 +39,14 @@ def create_pcap():
             # Each image gets a unique port to simulate different requests:
             pkt = (Ether() / 
                    IP(src=src_ip, dst=dst_ip) / 
-                   TCP(sport=443, dport=5000 + i, flags="PA") / 
-                   Raw(load=payload))
+                   TCP(sport=443, dport=5000 + i, flags="PA") /                                                     # PSH+ACK
+                   Raw(load=payload))                                                                               # Adds raw bytes as the payload content after TCP. Fake headers + image bytes.
             
+            # Add packet to list
             packets.append(pkt)
             print(f" [+] Added {filename} ({len(img_data)} bytes)")
-            
+
+        # Errors handling    
         except Exception as e:
             print(f" [!] Error with {filename}: {e}")
 
